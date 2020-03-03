@@ -8,7 +8,7 @@ function SigninScreen(props) {
   const [password, setPassword] = useState("");
   const userSignin = useSelector(state => state.userSignin);
   const { loading, userInfo, error } = userSignin;
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (userInfo) {
@@ -21,9 +21,8 @@ function SigninScreen(props) {
 
   const submitHandler = e => {
     e.preventDefault();
-    dispath(signin(email, password));
+    dispatch(signin(email, password));
   };
-
   return (
     <div className="form">
       <form onSubmit={submitHandler}>
@@ -32,8 +31,8 @@ function SigninScreen(props) {
             <h2>Sign-in</h2>
           </li>
           <li>
-            {loading && <div>Loading ...</div>}
-            {error && <div>Error ...</div>}
+            {loading && <div>Loading...</div>}
+            {error && <div>{error}</div>}
           </li>
           <li>
             <label htmlFor="email">Email</label>
@@ -69,5 +68,4 @@ function SigninScreen(props) {
     </div>
   );
 }
-
 export default SigninScreen;

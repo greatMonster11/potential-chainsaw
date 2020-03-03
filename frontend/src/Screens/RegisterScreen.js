@@ -25,7 +25,6 @@ function RegisterScreen(props) {
     e.preventDefault();
     dispatch(register(name, email, password));
   };
-
   return (
     <div className="form">
       <form onSubmit={submitHandler}>
@@ -35,7 +34,7 @@ function RegisterScreen(props) {
           </li>
           <li>
             {loading && <div>Loading...</div>}
-            {error && <div>Error...</div>}
+            {error && <div>{error}</div>}
           </li>
           <li>
             <label htmlFor="name">Name</label>
@@ -68,7 +67,6 @@ function RegisterScreen(props) {
             <label htmlFor="rePassword">Re-Enter Password</label>
             <input
               type="password"
-              name="rePassword"
               id="rePassword"
               onChange={e => {
                 if (password !== e.target.value) {
@@ -83,12 +81,11 @@ function RegisterScreen(props) {
             </button>
           </li>
           <li>
-            Already have account ? <Link to="/signin">Sign-in</Link>
+            Already have an account? <Link to="/signin">Sign-in</Link>
           </li>
         </ul>
       </form>
     </div>
   );
 }
-
 export default RegisterScreen;
