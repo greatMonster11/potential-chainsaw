@@ -3,6 +3,7 @@ import data from "./data";
 import dotenv from "dotenv";
 import config from "./config";
 import mongoose from "mongoose";
+import bodyParser from "body-parser";
 import userRoute from "./routes/userRoute";
 
 dotenv.config();
@@ -14,16 +15,12 @@ mongoose
     useUnifiedTopology: true,
     useCreateIndex: true
   })
+  .then(() => console.log("MongoDB connected !!!"))
   .catch(error => console.log(error.reason));
-
-var db = mongoose.connection;
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", function() {
-  console.log("DB connected !!!");
-});
 
 const app = express();
 
+app.use(bodyParser.json());
 app.use("/api/users", userRoute);
 app.get("/api/products", (req, res) => {
   res.send(data.products);
