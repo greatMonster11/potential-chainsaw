@@ -12,6 +12,7 @@ function ProductScreen(props) {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log(props.match.params.id);
     dispatch(detailsProduct(props.match.params.id));
     return () => {
       //
