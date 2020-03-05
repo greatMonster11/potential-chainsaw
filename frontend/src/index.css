@@ -237,8 +237,16 @@ a:hover {
   background-color: #f0f0f0;
 }
 
+.button.danger {
+  background-color: indianred;
+}
+
 .text-center {
   text-align: center;
+}
+
+.text-white {
+  color: #f8f8f8;
 }
 
 /* Cart */
@@ -330,4 +338,28 @@ input {
   padding: 1rem;
   border: 0.1rem #c0c0c0 solid;
   border-radius: 0.5rem;
+}
+
+/* Products */
+
+.product-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.content-margined {
+  margin: 1rem;
+}
+
+.table {
+  width: 100%;
+}
+
+th {
+  text-align: left;
+}
+
+tbody > tr:nth-child(odd) {
+  background-color: #f0f0f0;
 }
