@@ -7,6 +7,9 @@ import UserSigninScreen from "./Screens/SigninScreen";
 import { useSelector } from "react-redux";
 import UserRegisterScreen from "./Screens/RegisterScreen";
 import ProductsScreen from "./screens/ProductsScreen";
+import ShippingSreen from "./screens/ShippingScreen";
+import PaymentScreen from "./screens/PaymentScreen";
+import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 
 import "./App.css";
 
@@ -29,7 +32,7 @@ function App() {
             <Link to="/">amazona</Link>
           </div>
           <div className="header-links">
-            <a href="cart.html">Cart</a>
+            <Link to="/cart">Cart</Link>
             {userInfo ? (
               <Link to="/profile">{userInfo.name}</Link>
             ) : (
@@ -55,6 +58,9 @@ function App() {
         <main className="main">
           <div className="content">
             <Route path="/products" component={ProductsScreen} />
+            <Route path="/shipping" component={ShippingSreen} />
+            <Route path="/payment" component={PaymentScreen} />
+            <Route path="/placeorder" component={PlaceOrderScreen} />
             <Route path="/register" component={UserRegisterScreen} />
             <Route path="/signin" component={UserSigninScreen} />
             <Route path="/product/:id" component={ProductScreen} />

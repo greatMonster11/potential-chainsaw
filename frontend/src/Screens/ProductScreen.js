@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
 import { useSelector, useDispatch } from "react-redux";
 import { detailsProduct } from "../actions/productActions";
 
 function ProductScreen(props) {
-  // console.log(props.match.params.id);
   const [qty, setQty] = useState(1);
   const productDetails = useSelector(state => state.productDetails);
   const { product, loading, error } = productDetails;
@@ -89,5 +87,4 @@ function ProductScreen(props) {
     </div>
   );
 }
-
 export default ProductScreen;
