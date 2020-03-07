@@ -3,10 +3,15 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { addToCart, removeFormCart } from "../actions/cartActions";
 import CheckoutSteps from "../components/CheckoutSteps";
+import { createOrder } from "../actions/orderActions";
 
 function PlaceOrderScreen(props) {
   const cart = useSelector(state => state.cart);
   const { cartItems, shipping, payment } = cart;
+
+  const orderCreate = useSelector(state => state.orderCreate);
+  const { loading, success, error, order } = orderCreate;
+
   // checking requirements
   if (!shipping.address) {
     props.history.push("/shipping");
@@ -22,14 +27,37 @@ function PlaceOrderScreen(props) {
   const dispatch = useDispatch();
 
   const placeOrderHandler = () => {
+    console.log({
+      orderItems: cartItems,
+      shipping,
+      payment,
+      itemsPrice,
+      shippingPrice,
+      taxPrice,
+      totalPrice
+    });
     // create an order
+    dispatch(
+      createOrder({
+        orderItems: cartItems,
+        shipping,
+        payment,
+        itemsPrice,
+        shippingPrice,
+        taxPrice,
+        totalPrice
+      })
+    );
   };
 
   useEffect(() => {
+    if (success) {
+      props.history.push("/order/" + order._id);
+    }
     return () => {
       //
     };
-  }, []);
+  }, [success]);
 
   const checkoutHandler = () => {
     props.history.push("/signin?redirect=shipping");

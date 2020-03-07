@@ -10,6 +10,7 @@ import ProductsScreen from "./screens/ProductsScreen";
 import ShippingSreen from "./screens/ShippingScreen";
 import PaymentScreen from "./screens/PaymentScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
+import OrderScreen from "./screens/OrderScreen";
 
 import "./App.css";
 
@@ -57,6 +58,7 @@ function App() {
         </aside>
         <main className="main">
           <div className="content">
+            <Route path="/order/:id" component={OrderScreen} />
             <Route path="/products" component={ProductsScreen} />
             <Route path="/shipping" component={ShippingSreen} />
             <Route path="/payment" component={PaymentScreen} />
