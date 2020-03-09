@@ -6,7 +6,11 @@ import {
   USER_REGISTER_SUCCESS,
   USER_SIGNIN_FAIL,
   USER_SIGNIN_REQUEST,
-  USER_SIGNIN_SUCCESS
+  USER_SIGNIN_SUCCESS,
+  USER_UPDATE_FAIL,
+  USER_UPDATE_REQUEST,
+  USER_UPDATE_SUCCESS,
+  USER_LOGOUT
 } from "../constants/userConstants";
 
 const signin = (email, password) => async dispatch => {
@@ -35,4 +39,34 @@ const register = (name, email, password) => async dispatch => {
   }
 };
 
-export { register, signin };
+const update = ({ userId, name, email, password }) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    dispatch({ type: USER_UPDATE_REQUEST });
+    const {
+      userSigin: { userInfo }
+    } = getState();
+    const { data } = axios.put(
+      "/api/users" + userId,
+      { name, email, password },
+      {
+        headers: {
+          Authentication: "Bearer " + userInfo.token
+        }
+      }
+    );
+    dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
+    Cookie.set("userInfo", data);
+  } catch (error) {
+    dispatch({ type: USER_UPDATE_FAIL, payload: error.message });
+  }
+};
+
+const logout = () => dispatch => {
+  Cookie.remove("userInfo");
+  dispatch({ type: USER_LOGOUT });
+};
+
+export { register, signin, update, logout };
