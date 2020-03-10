@@ -43,22 +43,25 @@ const update = ({ userId, name, email, password }) => async (
   dispatch,
   getState
 ) => {
+  const {
+    userSignin: { userInfo }
+  } = getState();
+  dispatch({
+    type: USER_UPDATE_REQUEST,
+    payload: { userId, name, email, password }
+  });
   try {
-    dispatch({ type: USER_UPDATE_REQUEST });
-    const {
-      userSigin: { userInfo }
-    } = getState();
-    const { data } = axios.put(
-      "/api/users" + userId,
+    const { data } = await axios.put(
+      "/api/users/" + userId,
       { name, email, password },
       {
         headers: {
-          Authentication: "Bearer " + userInfo.token
+          Authorization: "Bearer " + userInfo.token
         }
       }
     );
     dispatch({ type: USER_UPDATE_SUCCESS, payload: data });
-    Cookie.set("userInfo", data);
+    Cookie.set("userInfo", JSON.stringify(data));
   } catch (error) {
     dispatch({ type: USER_UPDATE_FAIL, payload: error.message });
   }

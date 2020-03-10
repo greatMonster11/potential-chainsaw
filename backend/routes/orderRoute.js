@@ -4,8 +4,8 @@ import { isAuth } from "../util";
 
 const router = express.Router();
 
-router.get("/mine", isAuth, async (req, res) => {
-  const orders = await Order.find({ user: req.params._id });
+router.get("/mine/:id", isAuth, async (req, res) => {
+  const orders = await Order.find({ user: req.params.id });
   res.send(orders);
 });
 

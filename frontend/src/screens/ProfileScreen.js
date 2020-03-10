@@ -31,7 +31,6 @@ function ProfileScreen(props) {
 
   useEffect(() => {
     if (userInfo) {
-      console.log(userInfo.name);
       setEmail(userInfo.email);
       setName(userInfo.name);
       setPassword(userInfo.password);
@@ -125,7 +124,7 @@ function ProfileScreen(props) {
                   <td>{order._id}</td>
                   <td>{order.createdAt}</td>
                   <td>{order.totalPrice}</td>
-                  <td>{order.isPaid}</td>
+                  <td>{order.isPaid ? "✔️" : "✖️"}</td>
                   <td>
                     <Link to={"/order/" + order._id}>DETAILS</Link>
                   </td>
