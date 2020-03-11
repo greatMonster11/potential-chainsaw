@@ -14,10 +14,21 @@ import {
 } from "../constants/productConstants";
 import axios from "axios";
 
-const listProducts = () => async dispatch => {
+const listProducts = (
+  category = "",
+  searchKeyword = "",
+  sortOrder = ""
+) => async dispatch => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST }); // create loading event
-    const { data } = await axios.get("/api/products");
+    const { data } = await axios.get(
+      "/api/products?category=" +
+        category +
+        "&searchKeyword=" +
+        searchKeyword +
+        "&sortOrder=" +
+        sortOrder
+    );
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data }); // return data
   } catch (error) {
     dispatch({ type: PRODUCT_LIST_FAILED, payload: error.message });
