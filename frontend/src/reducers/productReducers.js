@@ -10,7 +10,10 @@ import {
   PRODUCT_DELETE_SUCCESS,
   PRODUCT_SAVE_FAIL,
   PRODUCT_SAVE_REQUEST,
-  PRODUCT_SAVE_SUCCESS
+  PRODUCT_SAVE_SUCCESS,
+  PRODUCT_REVIEW_SAVE_FAIL,
+  PRODUCT_REVIEW_SAVE_REQUEST,
+  PRODUCT_REVIEW_SAVE_SUCCESS
 } from "../constants/productConstants";
 
 function productListReducer(state = { products: [] }, action) {
@@ -65,9 +68,23 @@ function productDeleteReducer(state = { product: {} }, action) {
   }
 }
 
+function productReviewSaveReducer(state = {}, action) {
+  switch (action.type) {
+    case PRODUCT_REVIEW_SAVE_REQUEST:
+      return { loading: true };
+    case PRODUCT_REVIEW_SAVE_SUCCESS:
+      return { loading: false, success: true, products: action.payload };
+    case PRODUCT_REVIEW_SAVE_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+}
+
 export {
   productListReducer,
   productDetailsReducer,
   productSaveReducer,
-  productDeleteReducer
+  productDeleteReducer,
+  productReviewSaveReducer
 };

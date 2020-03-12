@@ -10,7 +10,10 @@ import {
   PRODUCT_DELETE_SUCCESS,
   PRODUCT_SAVE_FAIL,
   PRODUCT_SAVE_REQUEST,
-  PRODUCT_SAVE_SUCCESS
+  PRODUCT_SAVE_SUCCESS,
+  PRODUCT_REVIEW_SAVE_FAIL,
+  PRODUCT_REVIEW_SAVE_REQUEST,
+  PRODUCT_REVIEW_SAVE_SUCCESS
 } from "../constants/productConstants";
 import axios from "axios";
 
@@ -39,6 +42,7 @@ const detailsProduct = productId => async dispatch => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST, payload: productId });
     const { data } = await axios.get("/api/products/" + productId);
+    console.log(data);
     dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: PRODUCT_DETAILS_FAIL, payload: error.message });
@@ -92,4 +96,36 @@ const deleteProduct = productId => async (dispatch, getState) => {
   }
 };
 
-export { listProducts, detailsProduct, saveProduct, deleteProduct };
+const saveProductReview = (productId, review) => async (dispatch, getState) => {
+  dispatch({ type: PRODUCT_REVIEW_SAVE_REQUEST, payload: review });
+  try {
+    const {
+      userSignin: {
+        userInfo: { token }
+      }
+    } = getState();
+    const { data: savedReview } = await axios.post(
+      `/api/products/${productId}/reviews`,
+      review,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+    dispatch({ type: PRODUCT_REVIEW_SAVE_SUCCESS, payload: savedReview });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_REVIEW_SAVE_FAIL,
+      payload: error.message
+    });
+  }
+};
+
+export {
+  listProducts,
+  detailsProduct,
+  saveProduct,
+  deleteProduct,
+  saveProductReview
+};
