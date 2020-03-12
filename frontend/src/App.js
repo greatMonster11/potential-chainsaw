@@ -26,6 +26,8 @@ function App() {
   const closeMenu = () =>
     document.querySelector(".sidebar").classList.remove("open");
 
+  window.isAuth = !!userInfo;
+
   return (
     <BrowserRouter>
       <div className="grid-container">
