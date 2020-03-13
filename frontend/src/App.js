@@ -6,13 +6,14 @@ import CartScreen from "./Screens/CartScreen";
 import UserSigninScreen from "./Screens/SigninScreen";
 import { useSelector } from "react-redux";
 import UserRegisterScreen from "./Screens/RegisterScreen";
-import ProductsScreen from "./screens/ProductsScreen";
+import AdminProductsScreen from "./screens/ProductsScreen";
 import ShippingSreen from "./screens/ShippingScreen";
 import PaymentScreen from "./screens/PaymentScreen";
 import PlaceOrderScreen from "./screens/PlaceOrderScreen";
 import OrderScreen from "./screens/OrderScreen";
 import ProfileScreen from "./screens/ProfileScreen";
-import OrdersScreen from "./screens/OrdersScreen";
+import AdminOrdersScreen from "./screens/OrdersScreen";
+import PrivateRoute from "./components/PrivateRotue";
 
 import "./App.css";
 
@@ -73,13 +74,13 @@ function App() {
         </aside>
         <main className="main">
           <div className="content">
-            <Route path="/orders" component={OrdersScreen} />
-            <Route path="/profile" component={ProfileScreen} />
-            <Route path="/order/:id" component={OrderScreen} />
-            <Route path="/products" component={ProductsScreen} />
-            <Route path="/shipping" component={ShippingSreen} />
-            <Route path="/payment" component={PaymentScreen} />
-            <Route path="/placeorder" component={PlaceOrderScreen} />
+            <PrivateRoute path="/orders" component={AdminOrdersScreen} />
+            <PrivateRoute path="/profile" component={ProfileScreen} />
+            <PrivateRoute path="/order/:id" component={OrderScreen} />
+            <PrivateRoute path="/products" component={AdminProductsScreen} />
+            <PrivateRoute path="/shipping" component={ShippingSreen} />
+            <PrivateRoute path="/payment" component={PaymentScreen} />
+            <PrivateRoute path="/placeorder" component={PlaceOrderScreen} />
             <Route path="/register" component={UserRegisterScreen} />
             <Route path="/signin" component={UserSigninScreen} />
             <Route path="/product/:id" component={ProductScreen} />
