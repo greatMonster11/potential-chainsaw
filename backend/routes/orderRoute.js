@@ -4,7 +4,7 @@ import { isAuth, isAdmin } from "../util";
 
 const router = express.Router();
 
-router.get("/", isAuth, async (req, res) => {
+router.get("/", isAuth, isAdmin, async (req, res) => {
   const orders = await Order.find({}).populate("user");
   res.send(orders);
 });
