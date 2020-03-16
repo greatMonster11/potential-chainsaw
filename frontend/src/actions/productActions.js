@@ -13,7 +13,10 @@ import {
   PRODUCT_SAVE_SUCCESS,
   PRODUCT_REVIEW_SAVE_FAIL,
   PRODUCT_REVIEW_SAVE_REQUEST,
-  PRODUCT_REVIEW_SAVE_SUCCESS
+  PRODUCT_REVIEW_SAVE_SUCCESS,
+  PRODUCT_CATEGORY_LIST_FAIL,
+  PRODUCT_CATEGORY_LIST_REQUEST,
+  PRODUCT_CATEGORY_LIST_SUCCESS
 } from "../constants/productConstants";
 import axios from "axios";
 
@@ -122,10 +125,21 @@ const saveProductReview = (productId, review) => async (dispatch, getState) => {
   }
 };
 
+const listCategory = () => async dispatch => {
+  try {
+    dispatch({ type: PRODUCT_CATEGORY_LIST_REQUEST });
+    const { data } = await axios.get("/api/products/categories");
+    dispatch({ type: PRODUCT_CATEGORY_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: PRODUCT_CATEGORY_LIST_FAIL, payload: error.message });
+  }
+};
+
 export {
   listProducts,
   detailsProduct,
   saveProduct,
   deleteProduct,
-  saveProductReview
+  saveProductReview,
+  listCategory
 };
