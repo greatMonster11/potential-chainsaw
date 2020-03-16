@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { detailsProduct, saveProductReview } from "../actions/productActions";
 import Rating from "../components/Rating";
 
+import { PRODUCT_REVIEW_SAVE_RESET } from "../constants/productConstants";
+
 function ProductScreen(props) {
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState("");
@@ -21,11 +23,13 @@ function ProductScreen(props) {
   console.log(product);
   useEffect(() => {
     console.log(props.match.params.id);
-    dispatch(detailsProduct(props.match.params.id));
     if (successSaveReview) {
       setComment("");
       setRating("");
       alert("Review Submitted");
+      dispatch({ type: PRODUCT_REVIEW_SAVE_RESET });
+    } else {
+      dispatch(detailsProduct(props.match.params.id));
     }
     return () => {
       //

@@ -25,6 +25,15 @@ router.get("/", async (req, res) => {
   res.send(products);
 });
 
+router.get("/categories", async (req, res) => {
+  const categories = await Product.distinct("category");
+  if (categories) {
+    res.send(categories);
+  } else {
+    res.status(401).send({ message: "Nothing here" });
+  }
+});
+
 router.get("/:id", async (req, res) => {
   const productId = req.params.id;
   const product = await Product.findById(productId);
@@ -115,10 +124,5 @@ router.post("/:id/reviews", isAuth, async (req, res) => {
     throw Error("Product does not exist.");
   }
 });
-
-// router.get("/categories", async (req, res) => {
-//   const categories = await Product.find().distinct("category");
-//   res.send(categories);
-// });
 
 export default router;

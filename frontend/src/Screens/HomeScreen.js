@@ -39,6 +39,7 @@ function HomeScreen(props) {
           <form onSubmit={submitHandler}>
             <input
               name="searchKeyword"
+              value={searchKeyword}
               onChange={e => setSearchKeyword(e.target.value)}
             />
             <button type="submit">Search</button>

@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import HomeScreen from "./Screens/HomeScreen";
 import ProductScreen from "./Screens/ProductScreen";
 import CartScreen from "./Screens/CartScreen";
 import UserSigninScreen from "./Screens/SigninScreen";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import UserRegisterScreen from "./Screens/RegisterScreen";
 import AdminProductsScreen from "./screens/ProductsScreen";
 import ShippingSreen from "./screens/ShippingScreen";
@@ -15,11 +15,24 @@ import ProfileScreen from "./screens/ProfileScreen";
 import AdminOrdersScreen from "./screens/OrdersScreen";
 import PrivateRoute from "./components/PrivateRotue";
 
+import { listCategory } from "./actions/productActions";
+
 import "./App.css";
 
 function App() {
   const userSignin = useSelector(state => state.userSignin);
   const { userInfo } = userSignin;
+
+  const list = useSelector(state => state.listCategory);
+  const { loading, categories, error } = list;
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(listCategory());
+    return () => {
+      //
+    };
+  }, []);
 
   // Actions with side bar
   const openMenu = () =>
@@ -63,13 +76,12 @@ function App() {
             x
           </button>
           <ul className="categories">
-            <li>
-              <Link to="/category/Pants">Pants</Link>
-            </li>
-
-            <li>
-              <Link to="/category/Shirts">Shirts</Link>
-            </li>
+            {categories &&
+              categories.map(category => (
+                <li>
+                  <Link to={"/category/" + category}>{category}</Link>
+                </li>
+              ))}
           </ul>
         </aside>
         <main className="main">
